@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: pgvector/pgvector:pg16
+    container_name: notebooklm_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: giang_admin
+      POSTGRES_PASSWORD: my_secret_password
+      POSTGRES_DB: notebooklm_clone_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Dòng kết nối: Tự động chạy file init.sql để tạo bảng khi khởi động Docker
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:
